@@ -56,11 +56,13 @@ static void player_tick(struct Level *level, struct entity_Data *data) {
             continue;
 
         if(entity_touches(data, data2)) {
+            bool crouched = data->data[0];
+
             bool dies = false;
             if(data2->type == ENTITY_CACTUS)
                 dies = true;
             else if(data2->type == ENTITY_BIRD)
-                dies = true; // TODO check if the player is crouching
+                dies = !crouched;
 
             if(dies)
                 player_die(level, data);
