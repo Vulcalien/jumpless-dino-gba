@@ -65,7 +65,7 @@ static u32 spawn_search_index = 0;
 static inline void spawn_entity(struct Level *level,
                                 u32 entity, u32 row, u32 offset) {
     // DEBUG
-    entity = 2;
+    entity = 1;
 
     if(entity == 0)
         return;
@@ -82,6 +82,9 @@ static inline void spawn_entity(struct Level *level,
         data->y = row * 16 + 8;
 
         data->should_remove = false;
+
+        if(entity == ENTITY_CACTUS)
+            data->data[0] = rand();
     }
 }
 
