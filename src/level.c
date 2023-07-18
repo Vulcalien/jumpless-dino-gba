@@ -17,10 +17,6 @@
 
 #include "entity.h"
 
-static inline void tick_tiles(struct Level *level) {
-    // ...
-}
-
 static inline void insert_solid_entity(struct Level *level,
                                        struct entity_Data *data,
                                        u32 entity_id,
@@ -82,7 +78,6 @@ static inline void tick_entities(struct Level *level) {
 
 IWRAM_SECTION
 void level_tick(struct Level *level) {
-    tick_tiles(level);
     tick_entities(level);
 }
 
