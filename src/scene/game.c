@@ -13,29 +13,29 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-#ifndef VULC_TEMPLATE_LEVEL
-#define VULC_TEMPLATE_LEVEL
+#include "scene.h"
 
-#include "main.h"
+#include "level.h"
 
-#include "entity.h"
+static struct Level level;
 
-#define LEVEL_ENTITY_LIMIT (128)
+// flag bits:
+//  0: initialize level
+static void game_init(u32 flags) {
+    if(flags & (1 << 0))
+        level_init(&level);
+}
 
-struct Level {
-    u32 scroll_speed;
-    u32 scroll_progress;
+static void game_tick(void) {
+    level_tick(&level);
+}
 
-    // the scroll amount in pixels for the current tick
-    u32 scroll_amount;
+static void game_draw(void) {
+    level_draw(&level);
+}
 
-    u32 score;
-
-    struct entity_Data entities[LEVEL_ENTITY_LIMIT];
+const struct Scene scene_game = {
+    .init = game_init,
+    .tick = game_tick,
+    .draw = game_draw
 };
-
-extern void level_init(struct Level *level);
-extern void level_tick(struct Level *level);
-extern void level_draw(struct Level *level);
-
-#endif // VULC_TEMPLATE_LEVEL

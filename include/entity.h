@@ -18,7 +18,11 @@
 
 #include "main.h"
 
-#define ENTITY_TYPES (0)
+#define ENTITY_TYPES (3)
+
+#define ENTITY_PLAYER (0)
+#define ENTITY_CACTUS (1)
+#define ENTITY_BIRD   (2)
 
 #define ENTITY_INVALID (-1)
 
@@ -51,13 +55,9 @@ struct Entity {
     u8 xr;
     u8 yr;
 
-    bool is_solid;
-
     void (*tick)(struct Level *level, struct entity_Data *data);
-
-    // returns how many sprites were used
-    u32 (*draw)(struct Level *level, struct entity_Data *data,
-                u32 used_sprites);
+    void (*draw)(struct Level *level, struct entity_Data *data,
+                 u32 sprite_index);
 };
 
 extern const struct Entity *entity_list[ENTITY_TYPES];
@@ -92,5 +92,12 @@ inline bool entity_touches(struct entity_Data *data1,
         data2->x + e2->xr - 1, data2->y + e2->yr - 1
     );
 }
+
+// Entities
+
+extern const struct Entity
+    entity_player,
+    entity_cactus,
+    entity_bird;
 
 #endif // VULC_TEMPLATE_ENTITY

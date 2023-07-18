@@ -26,7 +26,9 @@ struct Scene {
 
 extern const struct Scene *scene;
 
-extern const struct Scene scene_start;
+extern const struct Scene
+    scene_start,
+    scene_game;
 
 inline void scene_set(const struct Scene *new_scene, u32 flags) {
     scene = new_scene;

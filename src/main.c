@@ -22,11 +22,15 @@
 #include "performance.h"
 #include "scene.h"
 
+u32 tick_count = 0;
+
 static inline void tick(void) {
     input_tick();
     scene->tick();
 
     performance_tick();
+
+    tick_count++;
 }
 
 static inline void draw(void) {
@@ -41,6 +45,10 @@ int AgbMain(void) {
 
     interrupt_enable();
     sound_init();
+
+    // DEBUG
+    screen_set_palette(0x0000, 0x7fff);
+    scene_set(&scene_game, 1);
 
     while(true) {
         tick();

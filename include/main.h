@@ -36,4 +36,6 @@
     #define NULL ((void *) 0)
 #endif
 
+extern u32 tick_count;
+
 #endif // VULC_TEMPLATE_CORE

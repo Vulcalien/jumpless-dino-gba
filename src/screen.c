@@ -36,8 +36,31 @@
 #define BG_PALETTE  ((vu16 *) 0x05000000)
 #define OBJ_PALETTE ((vu16 *) 0x05000200)
 
+#include "res/sprites.c"
+#include "res/tileset.c"
+
 void screen_init(void) {
-    // TODO ...
+    DISPLAY_CONTROL = 0       | // Video mode
+                      1 << 6  | // OBJ Character mapping (1 is linear)
+                      1 << 7  | // Forced Blank
+                      0 << 8  | // Enable BG 0
+                      1 << 9  | // Enable BG 1
+                      0 << 10 | // Enable BG 2
+                      0 << 11 | // Enable BG 3
+                      1 << 12;  // Enable OBJ
+
+    BG1_CONTROL = 1 << 0 | // Priority
+                  0 << 2 | // Tile Data character block (=16K)
+                  8 << 8;  // Map Data screen block (=2K)
+
+    // load tileset and sprites into VRAM
+    memcpy16(CHAR_BLOCK_0, (vu16 *) tileset,
+             sizeof(tileset) / sizeof(u16));
+    memcpy16(OBJ_TILESET,  (vu16 *) sprites,
+             sizeof(sprites) / sizeof(u16));
+
+    BG_PALETTE[0]  = 0x7c1f;
+    OBJ_PALETTE[0] = 0x7c1f;
 
     // hide all sprites
     for(u32 i = 0; i < 128; i++)
@@ -45,6 +68,17 @@ void screen_init(void) {
 
     // enable V-Blank IRQ
     DISPLAY_STATUS = (1 << 3);
+
+    // Disable Forced Blank
+    DISPLAY_CONTROL &= ~(1 << 7);
+}
+
+void screen_set_palette(u16 a, u16 b) {
+    BG_PALETTE[1] = a;
+    BG_PALETTE[2] = b;
+
+    OBJ_PALETTE[1] = a;
+    OBJ_PALETTE[2] = b;
 }
 
 IWRAM_SECTION

@@ -13,29 +13,29 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-#ifndef VULC_TEMPLATE_LEVEL
-#define VULC_TEMPLATE_LEVEL
-
-#include "main.h"
-
 #include "entity.h"
 
-#define LEVEL_ENTITY_LIMIT (128)
+#include "level.h"
+#include "screen.h"
 
-struct Level {
-    u32 scroll_speed;
-    u32 scroll_progress;
+IWRAM_SECTION
+static void bird_tick(struct Level *level, struct entity_Data *data) {
+    entity_move(level, data, -level->scroll_amount, 0);
 
-    // the scroll amount in pixels for the current tick
-    u32 scroll_amount;
+    if(data->x < 0)
+        data->should_remove = true;
+}
 
-    u32 score;
+IWRAM_SECTION
+static void bird_draw(struct Level *level, struct entity_Data *data,
+                        u32 sprite_index) {
+    // TODO ...
+}
 
-    struct entity_Data entities[LEVEL_ENTITY_LIMIT];
+const struct Entity entity_bird = {
+    .xr = 16,
+    .yr = 16,
+
+    .tick = bird_tick,
+    .draw = bird_draw
 };
-
-extern void level_init(struct Level *level);
-extern void level_tick(struct Level *level);
-extern void level_draw(struct Level *level);
-
-#endif // VULC_TEMPLATE_LEVEL
