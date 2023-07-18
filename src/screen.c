@@ -37,6 +37,7 @@
 #define OBJ_PALETTE ((vu16 *) 0x05000200)
 
 #include "res/sprites.c"
+#include "res/sprites_dino.c"
 #include "res/tileset.c"
 
 void screen_init(void) {
@@ -58,6 +59,8 @@ void screen_init(void) {
              sizeof(tileset) / sizeof(u16));
     memcpy16(OBJ_TILESET,  (vu16 *) sprites,
              sizeof(sprites) / sizeof(u16));
+    memcpy16(OBJ_TILESET + 32 * 16, (vu16 *) sprites_dino,
+             sizeof(sprites_dino) / sizeof(u16));
 
     BG_PALETTE[0]  = 0x7c1f;
     OBJ_PALETTE[0] = 0x7c1f;

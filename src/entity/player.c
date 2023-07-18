@@ -50,9 +50,9 @@ static void player_draw(struct Level *level, struct entity_Data *data,
 
     sprite_attribs[0] = ((data->y - 8) & 0xff) << 0; // Y coordinate
     sprite_attribs[1] = ((data->x - 8) & 0x1ff) << 0 | // X coordinate
-                        1                       << 14; // Sprite Size (1 is 16x16)
+                        2                       << 14; // Sprite Size (2 is 32x32)
 
-    u32 sprite_tile = 0;
+    u32 sprite_tile = 32;
     sprite_attribs[2] = sprite_tile << 0  | // Tile Number
                         1           << 10;  // Priority
 }
