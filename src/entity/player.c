@@ -58,8 +58,8 @@ static void player_draw(struct Level *level, struct entity_Data *data,
 }
 
 const struct Entity entity_player = {
-    .xr = 16,
-    .yr = 16,
+    .xr = 8,
+    .yr = 8,
 
     .tick = player_tick,
     .draw = player_draw

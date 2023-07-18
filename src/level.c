@@ -17,15 +17,34 @@
 
 #include "entity.h"
 #include "screen.h"
+#include "map.h"
+
+static u32 scroll_speed = 0;
+
+// keeps track of subpixel movement
+static u32 scroll_progress = 0;
+
+static inline void spawn_player(struct Level *level) {
+    struct entity_Data *data = &level->entities[0];
+
+    data->type = ENTITY_PLAYER;
+
+    data->x = 8;
+    data->y = 72;
+
+    data->should_remove = false;
+}
 
 void level_init(struct Level *level) {
-    level->scroll_speed = 40;
-    level->scroll_progress = 0;
+    scroll_speed = 64;
 
+    scroll_progress = 0;
     level->scroll_amount = 0;
 
-    for(u32 i = 0; i < LEVEL_ENTITY_LIMIT; i++)
+    for(u32 i = 1; i < LEVEL_ENTITY_LIMIT; i++)
         level->entities[i].type = ENTITY_INVALID;
+
+    spawn_player(level);
 }
 
 static inline void tick_entities(struct Level *level) {
@@ -42,18 +61,67 @@ static inline void tick_entities(struct Level *level) {
     }
 }
 
+static u32 spawn_search_index = 0;
+static inline void spawn_entity(struct Level *level,
+                                u32 entity, u32 row, u32 offset) {
+    // DEBUG
+    entity = 1;
+
+    if(entity == 0)
+        return;
+
+    while(level->entities[spawn_search_index].type < ENTITY_TYPES &&
+          spawn_search_index < LEVEL_ENTITY_LIMIT)
+        spawn_search_index++;
+
+    if(spawn_search_index < LEVEL_ENTITY_LIMIT) {
+        struct entity_Data *data = &level->entities[spawn_search_index];
+
+        data->type = entity;
+        data->x = 256 - offset;
+        data->y = 64 + row * 16;
+
+        data->should_remove = false;
+    }
+}
+
+static inline void spawn_column(struct Level *level,
+                                u32 column, u32 offset) {
+    // reset the search index
+    spawn_search_index = 0;
+
+    for(u32 i = 0; i < 4; i++) {
+        // TODO test if this calculation is correct
+        u32 entity = map[(column % (sizeof(map) / 4)) * 4 + i];
+
+        spawn_entity(level, entity, i, offset);
+    }
+}
+
 IWRAM_SECTION
 void level_tick(struct Level *level) {
-    level->scroll_progress += level->scroll_speed;
-
-    level->scroll_amount = level->scroll_progress / 256;
-    level->scroll_progress %= 256;
+    scroll_progress += scroll_speed;
+    level->scroll_amount = scroll_progress / 256;
+    scroll_progress %= 256;
 
     level->score += level->scroll_amount;
 
-    /*if(level->scroll_speed < 256) {*/
-        /*level->scroll_speed++; // TODO way too fast!*/
-    /*}*/
+    if(scroll_speed < 512) {
+        if(tick_count % 30 == 0)
+            scroll_speed++;
+    }
+
+    BG1_XOFFSET = level->score;
+
+    static u32 last_column = 0;
+    u32 current_column = level->score / 16;
+    while(last_column < current_column) {
+        last_column++;
+        spawn_column(
+            level, last_column,
+            level->score % 16 + (current_column - last_column) * 16
+        );
+    }
 
     tick_entities(level);
 }

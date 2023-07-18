@@ -42,8 +42,7 @@ struct entity_Data {
     i32 x;
     i32 y;
 
-    u8 should_remove : 1;
-    u8 solid_id : 7;
+    u8 should_remove;
 
     #if ENTITY_EXTRA_DATA_SIZE > 0
         u8 data[ENTITY_EXTRA_DATA_SIZE];

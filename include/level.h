@@ -23,10 +23,7 @@
 #define LEVEL_ENTITY_LIMIT (128)
 
 struct Level {
-    u32 scroll_speed;
-    u32 scroll_progress;
-
-    // the scroll amount in pixels for the current tick
+    // number of pixels that the level moves in the current tick
     u32 scroll_amount;
 
     u32 score;

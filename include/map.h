@@ -13,29 +13,11 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-#include "entity.h"
+#ifndef GAME_MAP
+#define GAME_MAP
 
-#include "level.h"
-#include "screen.h"
+#include "main.h"
 
-IWRAM_SECTION
-static void bird_tick(struct Level *level, struct entity_Data *data) {
-    entity_move(level, data, -level->scroll_amount, 0);
+extern const u8 map[4 * 2048];
 
-    if(data->x < 0)
-        data->should_remove = true;
-}
-
-IWRAM_SECTION
-static void bird_draw(struct Level *level, struct entity_Data *data,
-                        u32 sprite_index) {
-    // TODO ...
-}
-
-const struct Entity entity_bird = {
-    .xr = 8,
-    .yr = 8,
-
-    .tick = bird_tick,
-    .draw = bird_draw
-};
+#endif // GAME_MAP

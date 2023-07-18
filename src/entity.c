@@ -24,24 +24,10 @@ const struct Entity *entity_list[ENTITY_TYPES] = {
 };
 
 IWRAM_SECTION
-static bool move2(struct Level *level, struct entity_Data *data,
-                  i32 xm, i32 ym) {
-    data->x += xm;
-    data->y += ym;
-    return true;
-}
-
-IWRAM_SECTION
 bool entity_move(struct Level *level, struct entity_Data *data,
                  i32 xm, i32 ym) {
-    if(xm == 0 && ym == 0)
-        return true;
+    data->x += xm;
+    data->y += ym;
 
-    bool stopped = true;
-    if(xm != 0 && move2(level, data, xm, 0))
-        stopped = false;
-    if(ym != 0 && move2(level, data, 0, ym))
-        stopped = false;
-
-    return !stopped;
+    return true;
 }
