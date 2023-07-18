@@ -33,7 +33,7 @@
 // This will increase the size of all entities, no matter their type. If
 // this is not acceptable, only store an array index in 'data' and put
 // the necessary data into that array.
-#define ENTITY_EXTRA_DATA_SIZE (0)
+#define ENTITY_EXTRA_DATA_SIZE (1)
 
 struct Level;
 struct entity_Data {

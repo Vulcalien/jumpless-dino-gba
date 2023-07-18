@@ -44,6 +44,11 @@ static void player_tick(struct Level *level, struct entity_Data *data) {
             going_down = false;
     }
 
+    if(INPUT_DOWN(KEY_A) || INPUT_DOWN(KEY_B))
+        data->data[0] = true;
+    else
+        data->data[0] = false;
+
     // check for contact with other entities
     for(u32 i = 1; i < LEVEL_ENTITY_LIMIT; i++) {
         struct entity_Data *data2 = &level->entities[i];
@@ -76,6 +81,10 @@ static void player_draw(struct Level *level, struct entity_Data *data,
                         2           << 14; // Sprite Size (2 is 32x32)
 
     u32 sprite_tile = 48 + 16 * ((tick_count / 8) % 2);
+
+    bool crouched = data->data[0];
+    sprite_tile += crouched * 48;
+
     sprite_attribs[2] = sprite_tile << 0  | // Tile Number
                         1           << 10;  // Priority
 }
