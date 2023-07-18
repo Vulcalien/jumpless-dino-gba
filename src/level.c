@@ -30,7 +30,7 @@ static inline void spawn_player(struct Level *level) {
     data->type = ENTITY_PLAYER;
 
     data->x = 8;
-    data->y = 72;
+    data->y = 80;
 
     data->should_remove = false;
 }
@@ -65,7 +65,7 @@ static u32 spawn_search_index = 0;
 static inline void spawn_entity(struct Level *level,
                                 u32 entity, u32 row, u32 offset) {
     // DEBUG
-    entity = 1;
+    entity = 2;
 
     if(entity == 0)
         return;
