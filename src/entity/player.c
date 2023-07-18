@@ -17,6 +17,7 @@
 
 #include "level.h"
 #include "screen.h"
+#include "input.h"
 
 static inline void player_die(struct Level *level,
                               struct entity_Data *data) {
@@ -25,6 +26,25 @@ static inline void player_die(struct Level *level,
 
 IWRAM_SECTION
 static void player_tick(struct Level *level, struct entity_Data *data) {
+    static bool going_up   = false;
+    static bool going_down = false;
+
+    if(INPUT_DOWN(KEY_UP) && data->y % 16 == 8 && data->y != 8)
+        going_up = true;
+    else if(INPUT_DOWN(KEY_DOWN) && data->y % 16 == 8 && data-> y != 56)
+        going_down = true;
+
+    if(going_up) {
+        entity_move(level, data, 0, -2);
+        if(data->y % 16 == 8)
+            going_up = false;
+    } else if(going_down) {
+        entity_move(level, data, 0, +2);
+        if(data->y % 16 == 8)
+            going_down = false;
+    }
+
+    // check for contact with other entities
     for(u32 i = 1; i < LEVEL_ENTITY_LIMIT; i++) {
         struct entity_Data *data2 = &level->entities[i];
         if(data->type >= ENTITY_TYPES)
@@ -48,9 +68,12 @@ static void player_draw(struct Level *level, struct entity_Data *data,
                         u32 sprite_index) {
     vu16 *sprite_attribs = &OAM[sprite_index * 4];
 
-    sprite_attribs[0] = ((data->y - 8) & 0xff) << 0; // Y coordinate
-    sprite_attribs[1] = ((data->x - 8) & 0x1ff) << 0 | // X coordinate
-                        2                       << 14; // Sprite Size (2 is 32x32)
+    u32 x = data->x - 16;
+    u32 y = data->y - 16 + LEVEL_OFFSET;
+
+    sprite_attribs[0] = (y & 0xff) << 0; // Y coordinate
+    sprite_attribs[1] = (x & 0x1ff) << 0 | // X coordinate
+                        2           << 14; // Sprite Size (2 is 32x32)
 
     u32 sprite_tile = 48 + 16 * ((tick_count / 8) % 2);
     sprite_attribs[2] = sprite_tile << 0  | // Tile Number

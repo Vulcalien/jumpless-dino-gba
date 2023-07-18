@@ -31,9 +31,12 @@ static void cactus_draw(struct Level *level, struct entity_Data *data,
                         u32 sprite_index) {
     vu16 *sprite_attribs = &OAM[sprite_index * 4];
 
-    sprite_attribs[0] = ((data->y - 8) & 0xff) << 0; // Y coordinate
-    sprite_attribs[1] = ((data->x - 8) & 0x1ff) << 0 | // X coordinate
-                        1                       << 14; // Sprite Size (1 is 16x16)
+    u32 x = data->x - 8;
+    u32 y = data->y - 8 + LEVEL_OFFSET;
+
+    sprite_attribs[0] = (y & 0xff) << 0; // Y coordinate
+    sprite_attribs[1] = (x & 0x1ff) << 0 | // X coordinate
+                        1           << 14; // Sprite Size (1 is 16x16)
 
     u32 sprite_tile = 0;
     sprite_attribs[2] = sprite_tile << 0  | // Tile Number

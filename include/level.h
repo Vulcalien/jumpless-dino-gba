@@ -22,6 +22,9 @@
 
 #define LEVEL_ENTITY_LIMIT (128)
 
+// the Y offset of where the level is drawn
+#define LEVEL_OFFSET (64)
+
 struct Level {
     // number of pixels that the level moves in the current tick
     u32 scroll_amount;
