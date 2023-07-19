@@ -66,7 +66,7 @@ static inline void draw_tiles(void) {
 void level_init(struct Level *level) {
     draw_tiles();
 
-    scroll_speed = 256;
+    scroll_speed = 512;
 
     scroll_progress = 0;
     level->scroll_amount = 0;
@@ -148,7 +148,7 @@ void level_tick(struct Level *level) {
 
     score += level->scroll_amount;
 
-    if(scroll_speed < 1024) {
+    if(scroll_speed < 2048) {
         if(tick_count % 30 == 0)
             scroll_speed++;
     }
