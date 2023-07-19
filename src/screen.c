@@ -85,7 +85,12 @@ void screen_init(void) {
     DISPLAY_CONTROL &= ~(1 << 7);
 }
 
-void screen_set_palette(u16 a, u16 b) {
+void screen_set_palette(u32 darkness) {
+    darkness %= 32;
+
+    u32 a = (darkness)      << 10 | (darkness)      << 5 | (darkness);
+    u32 b = (31 - darkness) << 10 | (31 - darkness) << 5 | (31 - darkness);
+
     BG_PALETTE[1] = a;
     BG_PALETTE[2] = b;
 

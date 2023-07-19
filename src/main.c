@@ -60,9 +60,6 @@ int AgbMain(void) {
 
     load_high_score();
 
-    // DEBUG
-    screen_set_palette(0x0000, 0x7fff);
-
     while(true) {
         tick();
 

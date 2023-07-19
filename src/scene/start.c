@@ -21,6 +21,8 @@
 static i32 menu_selected = 0;
 
 static void start_init(u32 flags) {
+    screen_set_palette(2);
+
     if(flags == 1)
         menu_selected = 0;
 }

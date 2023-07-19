@@ -43,7 +43,8 @@
 
 extern void screen_init(void);
 
-extern void screen_set_palette(u16 a, u16 b);
+// 'darkness' in [0, 31]
+extern void screen_set_palette(u32 darkness);
 
 extern void screen_write(char *string, u32 palette, u32 x0, u32 y0);
 extern void screen_write_number(u32 number, u32 palette,
