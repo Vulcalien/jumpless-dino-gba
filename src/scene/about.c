@@ -22,7 +22,7 @@ static void about_init(u32 flags) {
 }
 
 static void about_tick(void) {
-    if(INPUT_RELEASED(KEY_A) || INPUT_PRESSED(KEY_B) ||
+    if(INPUT_RELEASED(KEY_A) || INPUT_RELEASED(KEY_B) ||
        INPUT_RELEASED(KEY_START))
         scene_set(&scene_start, 2);
 }

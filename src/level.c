@@ -33,7 +33,7 @@ static inline void spawn_player(struct Level *level) {
     data->type = ENTITY_PLAYER;
 
     data->x = 24;
-    data->y = 8;
+    data->y = 24;
 
     data->should_remove = false;
 }
