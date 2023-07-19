@@ -31,8 +31,6 @@ static inline void tick(void) {
     scene->tick();
 
     performance_tick();
-
-    tick_count++;
 }
 
 static inline void draw(void) {

@@ -24,6 +24,9 @@ static u32 scroll_speed = 0;
 // keeps track of subpixel movement
 static u32 scroll_progress = 0;
 
+// keeps track of the last column spawned
+static u32 last_column = 0;
+
 static inline void spawn_player(struct Level *level) {
     struct entity_Data *data = &level->entities[0];
 
@@ -73,6 +76,9 @@ void level_init(struct Level *level) {
 
     spawn_player(level);
     score = 0;
+
+    last_column = 0;
+    level->running = true;
 }
 
 static inline void tick_entities(struct Level *level) {
@@ -93,7 +99,7 @@ static u32 spawn_search_index = 0;
 static inline void spawn_entity(struct Level *level,
                                 u32 entity, u32 row, u32 offset) {
     // DEBUG
-    entity = 1;
+    entity = rand()%3;
 
     if(entity == 0)
         return;
@@ -131,6 +137,11 @@ static inline void spawn_column(struct Level *level,
 
 IWRAM_SECTION
 void level_tick(struct Level *level) {
+    if(!level->running)
+        return;
+
+    tick_count++;
+
     scroll_progress += scroll_speed;
     level->scroll_amount = scroll_progress / 256;
     scroll_progress %= 256;
@@ -144,7 +155,6 @@ void level_tick(struct Level *level) {
 
     BG1_XOFFSET = score % 16;
 
-    static u32 last_column = 0;
     u32 current_column = score / 16;
     while(last_column < current_column) {
         last_column++;
@@ -159,6 +169,9 @@ void level_tick(struct Level *level) {
 
 IWRAM_SECTION
 void level_draw(struct Level *level) {
+    if(!level->running)
+        return;
+
     // draw entities
     for(u32 i = 0; i < LEVEL_ENTITY_LIMIT; i++) {
         struct entity_Data *data = &level->entities[i];

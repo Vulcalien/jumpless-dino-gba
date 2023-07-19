@@ -18,10 +18,19 @@
 #include "level.h"
 #include "screen.h"
 #include "input.h"
+#include "screen.h"
+#include "scene.h"
 
 static inline void player_die(struct Level *level,
                               struct entity_Data *data) {
-    // TODO ...
+    level->running = false;
+
+    // change the player's sprite
+    vsync();
+    OAM[127 * 4 + 2] = 80 << 0  | // Tile Number
+                       1  << 10;  // Priority
+
+    scene_set(&scene_gameover, 1);
 }
 
 IWRAM_SECTION
