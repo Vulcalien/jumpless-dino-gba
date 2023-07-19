@@ -154,6 +154,7 @@ void level_tick(struct Level *level) {
     }
 
     BG1_XOFFSET = score % 16;
+    BG2_XOFFSET = (score / 32) % 256;
 
     u32 current_column = score / 16;
     while(last_column < current_column) {

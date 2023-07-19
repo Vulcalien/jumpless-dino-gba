@@ -37,6 +37,7 @@
 
 #define BG0_TILEMAP ((vu16 *) 0x06004000)
 #define BG1_TILEMAP ((vu16 *) 0x06004800)
+#define BG2_TILEMAP ((vu16 *) 0x06005000)
 
 #define OAM ((vu16 *) 0x07000000)
 
@@ -49,6 +50,7 @@ extern void screen_write_number(u32 number, u32 palette,
                                 u32 x0, u32 y0, bool right_to_left);
 
 extern void screen_clear_bg0(void);
+extern void screen_draw_bg2(void);
 
 extern void vsync(void);
 

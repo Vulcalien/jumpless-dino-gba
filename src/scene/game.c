@@ -22,6 +22,7 @@ static struct Level level;
 
 static void game_init(u32 flags) {
     screen_clear_bg0();
+    screen_draw_bg2();
     level_init(&level);
 }
 

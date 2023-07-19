@@ -46,7 +46,7 @@ void screen_init(void) {
                       1 << 7  | // Forced Blank
                       1 << 8  | // Enable BG 0
                       1 << 9  | // Enable BG 1
-                      0 << 10 | // Enable BG 2
+                      1 << 10 | // Enable BG 2
                       0 << 11 | // Enable BG 3
                       1 << 12;  // Enable OBJ
 
@@ -57,6 +57,10 @@ void screen_init(void) {
     BG1_CONTROL = 1 << 0 | // Priority
                   0 << 2 | // Tile Data character block (=16K)
                   9 << 8;  // Map Data screen block (=2K)
+
+    BG2_CONTROL = 2  << 0 | // Priority
+                  0  << 2 | // Tile Data character block (=16K)
+                  10 << 8;  // Map Data screen block (=2K)
 
     // load tileset and sprites into VRAM
     memcpy16(CHAR_BLOCK_0, (vu16 *) tileset,
@@ -69,13 +73,6 @@ void screen_init(void) {
     // Set backdrop color
     BG_PALETTE[0]  = 0x7c1f;
     OBJ_PALETTE[0] = 0x7c1f;
-
-    // Set third color (gray)
-    BG_PALETTE[2] = 0x3def;
-
-    // Set font colors
-    BG_PALETTE[15]      = 0x0000;
-    BG_PALETTE[16 + 15] = 0x3def;
 
     // hide all sprites
     for(u32 i = 0; i < 128; i++)
@@ -94,6 +91,13 @@ void screen_set_palette(u16 a, u16 b) {
 
     OBJ_PALETTE[1] = a;
     OBJ_PALETTE[2] = b;
+
+    // Set third color (gray)
+    BG_PALETTE[3] = 0x3def;
+
+    // Set font colors
+    BG_PALETTE[15]      = a;
+    BG_PALETTE[16 + 15] = 0x3def;
 }
 
 IWRAM_SECTION
@@ -141,6 +145,51 @@ void screen_clear_bg0(void) {
     for(u32 y = 0; y < 32; y++)
         for(u32 x = 0; x < 32; x++)
             BG0_TILEMAP[x + y * 32] = 5;
+}
+
+void screen_draw_bg2(void) {
+    for(u32 y = 0; y < 32; y++)
+        for(u32 x = 0; x < 32; x++)
+            BG2_TILEMAP[x + y * 32] = 20;
+
+    // draw clouds
+    {
+        u32 x0 = 14;
+        u32 y0 = 4;
+
+        BG2_TILEMAP[(x0) + (y0) * 32] = 16;
+        BG2_TILEMAP[(x0 + 1) + (y0) * 32] = 17;
+        BG2_TILEMAP[(x0 + 2) + (y0) * 32] = 18;
+        BG2_TILEMAP[(x0 + 3) + (y0) * 32] = 19;
+        BG2_TILEMAP[(x0) + (y0 + 1) * 32] = 24;
+        BG2_TILEMAP[(x0 + 1) + (y0 + 1) * 32] = 25;
+        BG2_TILEMAP[(x0 + 2) + (y0 + 1) * 32] = 26;
+        BG2_TILEMAP[(x0 + 3) + (y0 + 1) * 32] = 27;
+
+        x0 = 28;
+        y0 = 1;
+
+        BG2_TILEMAP[(x0) + (y0) * 32] = 16;
+        BG2_TILEMAP[(x0 + 1) + (y0) * 32] = 17;
+        BG2_TILEMAP[(x0 + 2) + (y0) * 32] = 18;
+        BG2_TILEMAP[(x0 + 3) + (y0) * 32] = 19;
+        BG2_TILEMAP[(x0) + (y0 + 1) * 32] = 24;
+        BG2_TILEMAP[(x0 + 1) + (y0 + 1) * 32] = 25;
+        BG2_TILEMAP[(x0 + 2) + (y0 + 1) * 32] = 26;
+        BG2_TILEMAP[(x0 + 3) + (y0 + 1) * 32] = 27;
+
+        x0 = 1;
+        y0 = 6;
+
+        BG2_TILEMAP[(x0) + (y0) * 32] = 16;
+        BG2_TILEMAP[(x0 + 1) + (y0) * 32] = 17;
+        BG2_TILEMAP[(x0 + 2) + (y0) * 32] = 18;
+        BG2_TILEMAP[(x0 + 3) + (y0) * 32] = 19;
+        BG2_TILEMAP[(x0) + (y0 + 1) * 32] = 24;
+        BG2_TILEMAP[(x0 + 1) + (y0 + 1) * 32] = 25;
+        BG2_TILEMAP[(x0 + 2) + (y0 + 1) * 32] = 26;
+        BG2_TILEMAP[(x0 + 3) + (y0 + 1) * 32] = 27;
+    }
 }
 
 IWRAM_SECTION
