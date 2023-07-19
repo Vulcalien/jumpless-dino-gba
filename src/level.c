@@ -32,7 +32,7 @@ static inline void spawn_player(struct Level *level) {
 
     data->type = ENTITY_PLAYER;
 
-    data->x = 8;
+    data->x = 24;
     data->y = 8;
 
     data->should_remove = false;
@@ -145,8 +145,8 @@ void level_tick(struct Level *level) {
 
     score += level->scroll_amount;
 
-    if(scroll_speed < 2048) {
-        if(tick_count % 30 == 0)
+    if(scroll_speed < 1024) {
+        if(tick_count % 32 == 0)
             scroll_speed++;
     }
 
