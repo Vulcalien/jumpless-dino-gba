@@ -77,7 +77,7 @@ run:
 build: $(OUT)
 
 clean:
-	@$(RM) $(RMFLAGS) $(BIN_DIR) $(OBJ_DIR)
+	@$(RM) $(RMFLAGS) $(BIN_DIR) $(OBJ_DIR) src/res
 
 $(OUT): $(OUT_ELF)
 	$(OBJCOPY) -O binary $^ $@
@@ -91,10 +91,10 @@ $(OBJ_DIR)/crt0.o: $(SRC_DIR)/crt0.s | $(OBJ_DIRECTORIES)
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c | $(OBJ_DIRECTORIES)
 	$(CC) $(CPPFLAGS) $(CFLAGS) -c $< -o $@
 
-$(BIN_DIR) $(OBJ_DIRECTORIES):
+$(BIN_DIR) $(OBJ_DIRECTORIES) src/res src/res/sounds:
 	$(MKDIR) $(MKDIRFLAGS) "$@"
 
-res: res/dino.png res/sprites.png res/tileset.png
+res: src/res src/res/sounds
 	scripts/tileset-to-array.py res/dino.png sprites_dino -s -o src/res/sprites_dino.c
 	scripts/tileset-to-array.py res/sprites.png sprites -s -o src/res/sprites.c
 	scripts/tileset-to-array.py res/tileset.png tileset -s -o src/res/tileset.c
