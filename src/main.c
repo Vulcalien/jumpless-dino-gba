@@ -48,7 +48,7 @@ static inline void load_high_score(void) {
        SRAM[3] != 'E')
         return;
 
-    high_score = SRAM[7] >> 24 | SRAM[6] >> 16 | SRAM[5] >> 8 | SRAM[4];
+    high_score = SRAM[7] << 24 | SRAM[6] << 16 | SRAM[5] << 8 | SRAM[4];
 }
 
 int AgbMain(void) {
