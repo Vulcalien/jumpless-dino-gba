@@ -67,7 +67,7 @@ OUT     := $(BIN_DIR)/$(OUT_FILENAME).gba
 OBJ_DIRECTORIES := $(OBJ_DIR) $(foreach DIR,$(SRC_SUBDIRS),$(OBJ_DIR)/$(DIR))
 
 # === TARGETS ===
-.PHONY: all run build clean
+.PHONY: all run build res clean
 
 all: build
 
@@ -93,5 +93,10 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c | $(OBJ_DIRECTORIES)
 
 $(BIN_DIR) $(OBJ_DIRECTORIES):
 	$(MKDIR) $(MKDIRFLAGS) "$@"
+
+res: res/dino.png res/sprites.png res/tileset.png
+	scripts/tileset-to-array.py res/dino.png sprites_dino -s -o src/res/sprites_dino.c
+	scripts/tileset-to-array.py res/sprites.png sprites -s -o src/res/sprites.c
+	scripts/tileset-to-array.py res/tileset.png tileset -s -o src/res/tileset.c
 
 -include $(OBJ:.o=.d)

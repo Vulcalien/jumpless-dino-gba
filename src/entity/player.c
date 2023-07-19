@@ -76,7 +76,7 @@ static void player_draw(struct Level *level, struct entity_Data *data,
     vu16 *sprite_attribs = &OAM[sprite_index * 4];
 
     u32 x = data->x - 16;
-    u32 y = data->y - 16 + LEVEL_OFFSET;
+    u32 y = data->y - 16 + LEVEL_OFFSET - 1;
 
     sprite_attribs[0] = (y & 0xff) << 0; // Y coordinate
     sprite_attribs[1] = (x & 0x1ff) << 0 | // X coordinate

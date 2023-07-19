@@ -35,6 +35,8 @@
 #define BG3_XOFFSET *((vu16 *) 0x0400001c)
 #define BG3_YOFFSET *((vu16 *) 0x0400001e)
 
+#define BG1_TILEMAP ((vu16 *) 0x06004000)
+
 #define OAM ((vu16 *) 0x07000000)
 
 extern void screen_init(void);
