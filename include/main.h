@@ -41,4 +41,8 @@ extern u32 tick_count;
 extern u32 high_score;
 extern u32 score;
 
+inline u32 actual_score(void) {
+    return score / 16;
+}
+
 #endif // VULC_TEMPLATE_CORE

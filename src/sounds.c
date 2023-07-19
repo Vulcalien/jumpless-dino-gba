@@ -13,26 +13,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-#ifndef VULC_TEMPLATE_SOUND
-#define VULC_TEMPLATE_SOUND
-
-#include "main.h"
-
 #include "sounds.h"
 
-extern void sound_init(void);
-
-enum sound_Channel {
-    sound_channel_A,
-    sound_channel_B
-};
-
-#define SOUND_PLAY(sound, channel, loop)\
-    sound_play((sound), sizeof(sound), (channel), (loop))
-extern void sound_play(const u8 *sound, u32 length,
-                       enum sound_Channel channel, bool loop);
-extern void sound_stop(enum sound_Channel channel);
-
-extern void sound_vblank(void);
-
-#endif // VULC_TEMPLATE_SOUND
+#include "res/sounds/good.c"
+#include "res/sounds/bad.c"

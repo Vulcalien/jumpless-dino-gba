@@ -20,9 +20,12 @@
 #include "input.h"
 #include "screen.h"
 #include "scene.h"
+#include "sound.h"
 
 static inline void player_die(struct Level *level,
                               struct entity_Data *data) {
+    SOUND_PLAY(sound_bad, sound_channel_A, false);
+
     level->running = false;
 
     // change the player's sprite

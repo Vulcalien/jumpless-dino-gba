@@ -18,6 +18,7 @@
 #include "entity.h"
 #include "screen.h"
 #include "map.h"
+#include "sound.h"
 
 static u32 scroll_speed = 0;
 
@@ -132,6 +133,13 @@ static inline void spawn_column(struct Level *level,
     }
 }
 
+static inline void increase_score(u32 amount) {
+    u32 hundred_value = actual_score() / 100;
+    score += amount;
+    if(actual_score() / 100 != hundred_value)
+        SOUND_PLAY(sound_good, sound_channel_B, false);
+}
+
 IWRAM_SECTION
 void level_tick(struct Level *level) {
     if(!level->running)
@@ -143,7 +151,7 @@ void level_tick(struct Level *level) {
     level->scroll_amount = scroll_progress / 256;
     scroll_progress %= 256;
 
-    score += level->scroll_amount;
+    increase_score(level->scroll_amount);
 
     if(scroll_speed < 1024) {
         if(tick_count % 32 == 0)
@@ -191,5 +199,5 @@ void level_draw(struct Level *level) {
 
     // draw score
     screen_write("00000", 0, 23, 2);
-    screen_write_number(score / 8, 0, 27, 2, true);
+    screen_write_number(actual_score(), 0, 27, 2, true);
 }

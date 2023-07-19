@@ -22,7 +22,7 @@
 static u32 restart_cooldown = 0;
 
 static void gameover_init(u32 flags) {
-    u32 new_score = score / 8;
+    u32 new_score = actual_score();
 
     if(new_score > high_score) {
         high_score = new_score;
