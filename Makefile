@@ -10,7 +10,7 @@ else
 endif
 
 # ========= EDIT HERE =========
-OUT_FILENAME := c-template
+OUT_FILENAME := jumpless-dino
 
 SRC_DIR := src
 OBJ_DIR := obj

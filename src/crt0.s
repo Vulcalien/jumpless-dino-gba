@@ -39,10 +39,10 @@ _start:
         .word   0xaf3cf087, 0x8be425d6, 0x72ac0a38, 0x07f8d421
 
     @ Game Title
-        .ascii  "C TEMPLATE  "
+        .ascii  "JUMPLESSDINO"
 
     @ Game Code
-        .ascii  "    "
+        .ascii  "ZJDE"
 
     @ Maker Code
         .byte   0x00, 0x00
@@ -63,7 +63,7 @@ _start:
         .byte   0x00
 
     @ Complement Check
-        .byte   0xd2
+        .byte   0x87
 
     @ Reserved (2 Bytes)
         .space  2, 0x00

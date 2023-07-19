@@ -38,20 +38,22 @@ static void player_tick(struct Level *level, struct entity_Data *data) {
     static bool going_up   = false;
     static bool going_down = false;
 
-    if(INPUT_DOWN(KEY_UP) && data->y % 16 == 8 && data->y != 8)
-        going_up = true;
-    else if(INPUT_DOWN(KEY_DOWN) && data->y % 16 == 8 && data-> y != 56)
-        going_down = true;
-
-    if(going_up) {
-        entity_move(level, data, 0, -2);
-        if(data->y % 16 == 8)
+    if(data->y % 16 == 8) {
+        if(INPUT_DOWN(KEY_UP) && data->y != 8)
+            going_up = true;
+        else
             going_up = false;
-    } else if(going_down) {
-        entity_move(level, data, 0, +2);
-        if(data->y % 16 == 8)
+
+        if(INPUT_DOWN(KEY_DOWN) && data-> y != 56)
+            going_down = true;
+        else
             going_down = false;
     }
+
+    if(going_up)
+        entity_move(level, data, 0, -2);
+    else if(going_down)
+        entity_move(level, data, 0, +2);
 
     if(INPUT_DOWN(KEY_A) || INPUT_DOWN(KEY_B))
         data->data[0] = true;
@@ -101,8 +103,8 @@ static void player_draw(struct Level *level, struct entity_Data *data,
 }
 
 const struct Entity entity_player = {
-    .xr = 8,
-    .yr = 8,
+    .xr = 6,
+    .yr = 5,
 
     .tick = player_tick,
     .draw = player_draw

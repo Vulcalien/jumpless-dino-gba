@@ -17,12 +17,36 @@
 
 #include "input.h"
 #include "screen.h"
+#include "sram.h"
+
+static u32 restart_cooldown = 0;
 
 static void gameover_init(u32 flags) {
-    high_score = score / 8;
+    u32 new_score = score / 8;
+
+    if(new_score > high_score) {
+        high_score = new_score;
+
+        SRAM[0] = 'Z';
+        SRAM[1] = 'J';
+        SRAM[2] = 'D';
+        SRAM[3] = 'E';
+
+        SRAM[4] = high_score;
+        SRAM[5] = high_score >> 8;
+        SRAM[6] = high_score >> 16;
+        SRAM[7] = high_score >> 24;
+    }
+
+    restart_cooldown = 10;
 }
 
 static void gameover_tick(void) {
+    if(restart_cooldown > 0) {
+        restart_cooldown--;
+        return;
+    }
+
     if(INPUT_PRESSED(KEY_A)      || INPUT_PRESSED(KEY_B) ||
        INPUT_PRESSED(KEY_UP)     || INPUT_PRESSED(KEY_DOWN) ||
        INPUT_PRESSED(KEY_LEFT)   || INPUT_PRESSED(KEY_RIGHT) ||

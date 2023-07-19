@@ -21,6 +21,7 @@
 #include "input.h"
 #include "performance.h"
 #include "scene.h"
+#include "sram.h"
 
 u32 tick_count = 0;
 u32 high_score = 0;
@@ -39,12 +40,25 @@ static inline void draw(void) {
     performance_draw();
 }
 
+static inline void load_high_score(void) {
+    // check for the Game Code (ZJDE)
+    if(SRAM[0] != 'Z' ||
+       SRAM[1] != 'J' ||
+       SRAM[2] != 'D' ||
+       SRAM[3] != 'E')
+        return;
+
+    high_score = SRAM[7] >> 24 | SRAM[6] >> 16 | SRAM[5] >> 8 | SRAM[4];
+}
+
 int AgbMain(void) {
     screen_init();
     scene_set(&scene_start, 0);
 
     interrupt_enable();
     sound_init();
+
+    load_high_score();
 
     // DEBUG
     screen_set_palette(0x0000, 0x7fff);
