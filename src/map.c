@@ -15,6 +15,4 @@
  */
 #include "map.h"
 
-const u8 map[4 * 2048] = {
-    0, 0, 0, 1
-};
+#include "res/map.c"

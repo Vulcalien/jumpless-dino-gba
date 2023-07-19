@@ -98,9 +98,6 @@ static inline void tick_entities(struct Level *level) {
 static u32 spawn_search_index = 0;
 static inline void spawn_entity(struct Level *level,
                                 u32 entity, u32 row, u32 offset) {
-    // DEBUG
-    entity = rand()%3;
-
     if(entity == 0)
         return;
 

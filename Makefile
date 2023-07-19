@@ -98,5 +98,6 @@ res: res/dino.png res/sprites.png res/tileset.png
 	scripts/tileset-to-array.py res/dino.png sprites_dino -s -o src/res/sprites_dino.c
 	scripts/tileset-to-array.py res/sprites.png sprites -s -o src/res/sprites.c
 	scripts/tileset-to-array.py res/tileset.png tileset -s -o src/res/tileset.c
+	scripts/map-to-array.py res/map.png map -o src/res/map.c
 
 -include $(OBJ:.o=.d)
