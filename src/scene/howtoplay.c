@@ -18,41 +18,16 @@
 #include "input.h"
 #include "screen.h"
 
-static i32 menu_selected = 0;
-
-static void start_init(u32 flags) {
-    if(flags == 1)
-        menu_selected = 0;
+static void howtoplay_init(u32 flags) {
 }
 
-static void start_tick(void) {
-    if(INPUT_PRESSED(KEY_UP))
-        menu_selected--;
-    if(INPUT_PRESSED(KEY_DOWN))
-        menu_selected++;
-
-    if(menu_selected < 0)
-        menu_selected = 2;
-    else if(menu_selected >= 3)
-        menu_selected = 0;
-
-    if(INPUT_RELEASED(KEY_A) || INPUT_RELEASED(KEY_B) ||
-       INPUT_RELEASED(KEY_START)) {
-        switch(menu_selected) {
-            case 0:
-                scene_set(&scene_game, 1);
-                break;
-            case 1:
-                scene_set(&scene_howtoplay, 1);
-                break;
-            case 2:
-                scene_set(&scene_about, 1);
-                break;
-        }
-    }
+static void howtoplay_tick(void) {
+    if(INPUT_RELEASED(KEY_A) || INPUT_PRESSED(KEY_B) ||
+       INPUT_RELEASED(KEY_START))
+        scene_set(&scene_start, 2);
 }
 
-static void start_draw(void) {
+static void howtoplay_draw(void) {
     for(u32 y = 0; y < 20; y++) {
         for(u32 x = 0; x < 30; x++) {
             BG0_TILEMAP[x + y * 32] = 20;
@@ -60,12 +35,20 @@ static void start_draw(void) {
         }
     }
 
-    screen_write("JUMPLESS DINO!", 0, 8, 5);
+    screen_write("HOW TO PLAY", 0, 9, 1);
 
-    // draw menu
-    screen_write("START",       menu_selected == 0 ? 0 : 1, 12, 8);
-    screen_write("HOW TO PLAY", menu_selected == 1 ? 0 : 1, 9,  10);
-    screen_write("ABOUT",       menu_selected == 2 ? 0 : 1, 12, 11);
+    screen_write(
+        "RUN AS FAR AS YOU CAN WHILE\n"
+        "AVOIDING CACTUSES AND\n"
+        "PTERODACTYLS.\n"
+        "\n"
+        "YOU CAN ALSO CROUCH TO AVOID\n"
+        "PTERODACTYLS AND PASS BELOW\n"
+        "THEM.\n"
+        "\n"
+        "USE THE DPAD TO MOVE UP AND\n"
+        "DOWN. USE A OR B TO CROUCH.",
+        0, 1, 4);
 
     // animation
     static u32 animation_ticks = 0;
@@ -82,8 +65,8 @@ static void start_draw(void) {
     OAM[4 + 2] = 12 + 4 * ((animation_ticks / 16) % 2);
 }
 
-const struct Scene scene_start = {
-    .init = start_init,
-    .tick = start_tick,
-    .draw = start_draw
+const struct Scene scene_howtoplay = {
+    .init = howtoplay_init,
+    .tick = howtoplay_tick,
+    .draw = howtoplay_draw
 };

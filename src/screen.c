@@ -155,7 +155,7 @@ void screen_draw_bg2(void) {
     // draw clouds
     {
         u32 x0 = 14;
-        u32 y0 = 4;
+        u32 y0 = 6;
 
         BG2_TILEMAP[(x0) + (y0) * 32] = 16;
         BG2_TILEMAP[(x0 + 1) + (y0) * 32] = 17;
@@ -179,7 +179,7 @@ void screen_draw_bg2(void) {
         BG2_TILEMAP[(x0 + 3) + (y0 + 1) * 32] = 27;
 
         x0 = 1;
-        y0 = 6;
+        y0 = 4;
 
         BG2_TILEMAP[(x0) + (y0) * 32] = 16;
         BG2_TILEMAP[(x0 + 1) + (y0) * 32] = 17;

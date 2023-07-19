@@ -53,7 +53,7 @@ static inline void load_high_score(void) {
 
 int AgbMain(void) {
     screen_init();
-    scene_set(&scene_start, 0);
+    scene_set(&scene_start, 1);
 
     interrupt_enable();
     sound_init();
@@ -62,7 +62,6 @@ int AgbMain(void) {
 
     // DEBUG
     screen_set_palette(0x0000, 0x7fff);
-    scene_set(&scene_game, 1);
 
     while(true) {
         tick();

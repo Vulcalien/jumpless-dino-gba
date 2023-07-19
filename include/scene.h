@@ -28,6 +28,8 @@ extern const struct Scene *scene;
 
 extern const struct Scene
     scene_start,
+    scene_howtoplay,
+    scene_about,
     scene_game,
     scene_gameover;
 
