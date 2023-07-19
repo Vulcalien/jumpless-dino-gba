@@ -23,6 +23,8 @@
 #include "scene.h"
 
 u32 tick_count = 0;
+u32 high_score = 0;
+u32 score = 0;
 
 static inline void tick(void) {
     input_tick();

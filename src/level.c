@@ -72,6 +72,7 @@ void level_init(struct Level *level) {
         level->entities[i].type = ENTITY_INVALID;
 
     spawn_player(level);
+    score = 0;
 }
 
 static inline void tick_entities(struct Level *level) {
@@ -134,22 +135,22 @@ void level_tick(struct Level *level) {
     level->scroll_amount = scroll_progress / 256;
     scroll_progress %= 256;
 
-    level->score += level->scroll_amount;
+    score += level->scroll_amount;
 
     if(scroll_speed < 1024) {
         if(tick_count % 30 == 0)
             scroll_speed++;
     }
 
-    BG1_XOFFSET = (level->score) % 16;
+    BG1_XOFFSET = score % 16;
 
     static u32 last_column = 0;
-    u32 current_column = level->score / 16;
+    u32 current_column = score / 16;
     while(last_column < current_column) {
         last_column++;
         spawn_column(
             level, last_column,
-            level->score % 16 + (current_column - last_column) * 16
+            score % 16 + (current_column - last_column) * 16
         );
     }
 
@@ -170,4 +171,14 @@ void level_draw(struct Level *level) {
         else
             OAM[sprite_index * 4] = 1 << 9;
     }
+
+    // draw high score
+    if(high_score) {
+        screen_write("HI 00000", 1, 14, 2);
+        screen_write_number(high_score, 1, 21, 2, true);
+    }
+
+    // draw score
+    screen_write("00000", 0, 23, 2);
+    screen_write_number(score / 8, 0, 27, 2, true);
 }

@@ -16,12 +16,15 @@
 #include "scene.h"
 
 #include "level.h"
+#include "screen.h"
 
 static struct Level level;
 
 // flag bits:
 //  0: initialize level
 static void game_init(u32 flags) {
+    screen_clear_bg0();
+
     if(flags & (1 << 0))
         level_init(&level);
 }

@@ -38,4 +38,7 @@
 
 extern u32 tick_count;
 
+extern u32 high_score;
+extern u32 score;
+
 #endif // VULC_TEMPLATE_CORE

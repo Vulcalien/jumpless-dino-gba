@@ -29,8 +29,6 @@ struct Level {
     // number of pixels that the level moves in the current tick
     u32 scroll_amount;
 
-    u32 score;
-
     struct entity_Data entities[LEVEL_ENTITY_LIMIT];
 };
 

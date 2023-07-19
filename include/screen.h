@@ -46,7 +46,7 @@ extern void screen_set_palette(u16 a, u16 b);
 
 extern void screen_write(char *string, u32 palette, u32 x0, u32 y0);
 extern void screen_write_number(u32 number, u32 palette,
-                                u32 x0, u32 y0);
+                                u32 x0, u32 y0, bool right_to_left);
 
 extern void screen_clear_bg0(void);
 

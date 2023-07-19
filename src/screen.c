@@ -114,16 +114,26 @@ void screen_write(char *string, u32 palette, u32 x0, u32 y0) {
 }
 
 IWRAM_SECTION
-void screen_write_number(u32 number, u32 palette, u32 x0, u32 y0) {
+void screen_write_number(u32 number, u32 palette, u32 x0, u32 y0,
+                         bool right_to_left) {
     u32 x = x0;
     u32 y = y0;
 
-    while(number != 0) {
-        u32 digit = number % 10;
+    u32 number_len = 1;
+    {
+        u32 tmp = number;
+        while(tmp /= 10)
+            number_len++;
+    }
+
+    for(i32 i = number_len; i > 0; i--) {
+        char c = '0' + (number % 10);
         number /= 10;
 
-        BG0_TILEMAP[x + y * 32] = ('0' + digit) | palette << 12;
-        x++;
+        if(right_to_left)
+            BG0_TILEMAP[x - number_len + i + y * 32] = c | palette << 12;
+        else
+            BG0_TILEMAP[x + i + y * 32] = c | palette << 12;
     }
 }
 
