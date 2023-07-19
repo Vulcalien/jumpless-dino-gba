@@ -35,13 +35,20 @@
 #define BG3_XOFFSET *((vu16 *) 0x0400001c)
 #define BG3_YOFFSET *((vu16 *) 0x0400001e)
 
-#define BG1_TILEMAP ((vu16 *) 0x06004000)
+#define BG0_TILEMAP ((vu16 *) 0x06004000)
+#define BG1_TILEMAP ((vu16 *) 0x06004800)
 
 #define OAM ((vu16 *) 0x07000000)
 
 extern void screen_init(void);
 
 extern void screen_set_palette(u16 a, u16 b);
+
+extern void screen_write(char *string, u32 palette, u32 x0, u32 y0);
+extern void screen_write_number(u32 number, u32 palette,
+                                u32 x0, u32 y0);
+
+extern void screen_clear_bg0(void);
 
 extern void vsync(void);
 
