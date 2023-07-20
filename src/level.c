@@ -149,9 +149,6 @@ void level_tick(struct Level *level) {
             scroll_speed++;
     }
 
-    BG1_XOFFSET = score % 16;
-    BG2_XOFFSET = (score / 32) % 256;
-
     u32 current_column = score / 16;
     while(last_column < current_column) {
         last_column++;
@@ -168,6 +165,10 @@ IWRAM_SECTION
 void level_draw(struct Level *level) {
     if(!level->running)
         return;
+
+    // update BG offset
+    BG1_XOFFSET = score % 16;
+    BG2_XOFFSET = (score / 32) % 256;
 
     // draw entities
     for(u32 i = 0; i < LEVEL_ENTITY_LIMIT; i++) {
