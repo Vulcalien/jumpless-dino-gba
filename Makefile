@@ -98,7 +98,6 @@ res: src/res src/res/sounds
 	scripts/tileset-to-array.py res/dino.png sprites_dino -s -o src/res/sprites_dino.c
 	scripts/tileset-to-array.py res/sprites.png sprites -s -o src/res/sprites.c
 	scripts/tileset-to-array.py res/tileset.png tileset -s -o src/res/tileset.c
-	scripts/map-to-array.py res/map.png map -o src/res/map.c
 	xxd -n sound_good -i res/sounds/good.raw src/res/sounds/good.c
 	xxd -n sound_bad -i res/sounds/bad.raw src/res/sounds/bad.c
 

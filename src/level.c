@@ -17,7 +17,6 @@
 
 #include "entity.h"
 #include "screen.h"
-#include "map.h"
 
 static u32 scroll_speed = 0;
 
@@ -124,8 +123,17 @@ static inline void spawn_column(struct Level *level,
     spawn_search_index = 0;
 
     for(u32 i = 0; i < 4; i++) {
-        // TODO test if this calculation is correct
-        u32 entity = map[(column % (sizeof(map) / 4)) * 4 + i];
+        u32 entity = 0;
+
+        switch(rand() % 32) {
+            case 0: case 1:
+                entity = ENTITY_CACTUS;
+                break;
+
+            case 2:
+                entity = ENTITY_BIRD;
+                break;
+        }
 
         spawn_entity(level, entity, i, offset);
     }
