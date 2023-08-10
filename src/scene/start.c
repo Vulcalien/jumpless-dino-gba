@@ -20,6 +20,8 @@
 
 static i32 menu_selected = 0;
 
+static u32 random_seed = 0;
+
 static void start_init(u32 flags) {
     screen_set_palette(2);
 
@@ -42,6 +44,7 @@ static void start_tick(void) {
        INPUT_RELEASED(KEY_START)) {
         switch(menu_selected) {
             case 0:
+                srand(random_seed, false);
                 scene_set(&scene_game, 1);
                 break;
             case 1:
@@ -52,6 +55,8 @@ static void start_tick(void) {
                 break;
         }
     }
+
+    random_seed++;
 }
 
 static void start_draw(void) {
