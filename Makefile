@@ -95,9 +95,7 @@ $(BIN_DIR) $(OBJ_DIRECTORIES) src/res src/res/sounds:
 	$(MKDIR) $(MKDIRFLAGS) "$@"
 
 res: src/res src/res/sounds
-	scripts/tileset-to-array.py -i res/dino.png    -n sprites_dino --tile-width 4 --tile-height 4 --bpp 4 --palette res/palette.png -s -o src/res/sprites_dino.c
-	scripts/tileset-to-array.py -i res/sprites.png -n sprites      --tile-width 2 --tile-height 2 --bpp 4 --palette res/palette.png -s -o src/res/sprites.c
-	scripts/tileset-to-array.py -i res/tileset.png -n tileset      --tile-width 1 --tile-height 1 --bpp 4 --palette res/palette.png -s -o src/res/tileset.c
+	scripts/convert-resources.py res/resources.json
 	xxd -n sound_good -i res/sounds/good.raw src/res/sounds/good.c
 	xxd -n sound_bad -i res/sounds/bad.raw src/res/sounds/bad.c
 

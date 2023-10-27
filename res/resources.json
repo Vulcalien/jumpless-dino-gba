@@ -1,0 +1,48 @@
+{
+    "tilesets": [
+        {
+            "name": "sprites_dino",
+
+            "input": "res/dino.png",
+            "output": "src/res/sprites_dino.c",
+
+            "tile_width": 4,
+            "tile_height": 4,
+
+            "palette": "res/palette.png",
+            "bpp": 4,
+
+            "static": true
+        },
+
+        {
+            "name": "sprites",
+
+            "input": "res/sprites.png",
+            "output": "src/res/sprites.c",
+
+            "tile_width": 2,
+            "tile_height": 2,
+
+            "palette": "res/palette.png",
+            "bpp": 4,
+
+            "static": true
+        },
+
+        {
+            "name": "tileset",
+
+            "input": "res/tileset.png",
+            "output": "src/res/tileset.c",
+
+            "tile_width": 1,
+            "tile_height": 1,
+
+            "palette": "res/palette.png",
+            "bpp": 4,
+
+            "static": true
+        }
+    ]
+}
