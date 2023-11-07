@@ -44,5 +44,21 @@
 
             "static": true
         }
+    ],
+
+    "files": [
+        {
+            "name": "sound_good",
+
+            "input": "res/sounds/good.raw",
+            "output": "src/res/sounds/good.c"
+        },
+
+        {
+            "name": "sound_bad",
+
+            "input": "res/sounds/bad.raw",
+            "output": "src/res/sounds/bad.c"
+        }
     ]
 }

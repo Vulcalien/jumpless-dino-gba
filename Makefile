@@ -96,7 +96,5 @@ $(BIN_DIR) $(OBJ_DIRECTORIES) src/res src/res/sounds:
 
 res: src/res src/res/sounds
 	scripts/convert-resources.py res/resources.json
-	xxd -n sound_good -i res/sounds/good.raw src/res/sounds/good.c
-	xxd -n sound_bad -i res/sounds/bad.raw src/res/sounds/bad.c
 
 -include $(OBJ:.o=.d)

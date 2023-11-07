@@ -18,7 +18,7 @@
 
 #include "main.h"
 
-extern u8 sound_good[6317];
-extern u8 sound_bad[5305];
+extern const u8 sound_good[6317];
+extern const u8 sound_bad[5305];
 
 #endif // GAME_SOUNDS
