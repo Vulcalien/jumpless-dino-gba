@@ -20,17 +20,18 @@
 {
     "tilesets": [
         {
+            "name": "my_tileset",
+
             "input": "my/input/tileset.png",
             "output": "my/output/tileset.c",
-
-            "name": "my_tileset",
-            "static": true,
 
             "tile_width": 2,
             "tile_height": 4,
 
             "palette": "my/input/palette.png",
-            "bpp": 4
+            "bpp": 4,
+
+            "static": true
         },
 
         ...
@@ -38,10 +39,11 @@
 
     "palettes": [
         {
-            "input": "my/palette/file.png",
+            "name": "my_palette",
+
+            "input": "my/input/palette.png",
             "output": "my/output/palette.c",
 
-            "name": "my_palette",
             "static": false
         },
 
@@ -50,24 +52,39 @@
 
     "images": [
         {
+            "name": "image_8bpp",
+
             "input": "my/input/8bpp_image.png",
             "output": "my/output/8bpp_image.c",
 
-            "name": "image_8bpp",
-            "static": false,
-
+            "palette": "my/input/palette.png",
             "bpp": 8,
-            "palette": "my/input/palette.png"
+
+            "static": false
         },
 
         {
+            "name": "image_16bpp",
+
             "input": "my/input/16bpp_image.png",
             "output": "my/output/16bpp_image.c",
 
-            "name": "image_16bpp",
-            "static": false,
+            "bpp": 16,
 
-            "bpp": 16
+            "static": false
+        },
+
+        ...
+    ],
+
+    "files": [
+        {
+            "name": "my_file",
+
+            "input": "my/input/file.bin",
+            "output": "my/output/file.c",
+
+            "static": true
         },
 
         ...
@@ -110,7 +127,7 @@ def convert_tileset(element):
     palette = str(element['palette'])
     bpp     = int(element['bpp'])
 
-    cmd = "%s/tileset-to-array.py -i %s -o %s -n %s %s " +\
+    cmd = "%s/res/tileset-to-array.py -i %s -o %s -n %s %s " +\
           "--tile-width %d --tile-height %d " +\
           "--palette %s --bpp %d"
     cmd %= (
@@ -125,7 +142,7 @@ def convert_tileset(element):
 def convert_palette(element):
     (input_file, output_file, name, static) = basic_info(element)
 
-    cmd = "%s/palette-to-array.py -i %s -o %s -n %s %s"
+    cmd = "%s/res/palette-to-array.py -i %s -o %s -n %s %s"
     cmd %= (
         parent_path, input_file, output_file, name,
         ('-s' if static else '')
@@ -144,12 +161,24 @@ def convert_image(element):
     else:
         palette = None
 
-    cmd = "%s/image-to-array.py -i %s -o %s -n %s %s" +\
+    cmd = "%s/res/image-to-array.py -i %s -o %s -n %s %s" +\
           "--bpp %d %s"
     cmd %= (
         parent_path, input_file, output_file, name,
         ('-s' if static else ''), bpp,
         (('--palette %s' % palette) if palette else '')
+    )
+
+    print(cmd)
+    os.system(cmd)
+
+def convert_file(element):
+    (input_file, output_file, name, static) = basic_info(element)
+
+    cmd = "%s/res/file-to-array.py -i %s -o %s -n %s %s"
+    cmd %= (
+        parent_path, input_file, output_file, name,
+        ('-s' if static else '')
     )
 
     print(cmd)
@@ -174,3 +203,7 @@ for f in args.res_list_files:
     if 'images' in content:
         for element in content['images']:
             convert_image(element)
+
+    if 'files' in content:
+        for element in content['files']:
+            convert_file(element)
