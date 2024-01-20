@@ -1,4 +1,4 @@
-/* Copyright 2023 Vulcalien
+/* Copyright 2023-2024 Vulcalien
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,7 +26,25 @@
 
 #define INTERRUPT_HANDLER *((vu32 *) 0x03007ffc)
 
+// Interrupt flags
 #define VBLANK (1 << 0)
+#define HBLANK (1 << 1)
+#define VCOUNT (1 << 2)
+
+#define TIMER0 (1 << 3)
+#define TIMER1 (1 << 4)
+#define TIMER2 (1 << 5)
+#define TIMER3 (1 << 6)
+
+#define SERIAL (1 << 7)
+
+#define DMA0 (1 << 8)
+#define DMA1 (1 << 9)
+#define DMA2 (1 << 10)
+#define DMA3 (1 << 11)
+
+#define KEYPAD  (1 << 12)
+#define GAMEPAK (1 << 13)
 
 IWRAM_SECTION
 static void interrupt_handler(void) {
@@ -34,15 +52,20 @@ static void interrupt_handler(void) {
         IF_BIOS |= VBLANK;
         IF = VBLANK;
 
-        sound_vblank();
         performance_vblank();
+    }
+
+    if(IF & TIMER1) {
+        IF = TIMER1;
+
+        sound_timer1_irq();
     }
 }
 
 void interrupt_enable(void) {
     INTERRUPT_HANDLER = (u32) &interrupt_handler;
 
-    IE = VBLANK;
+    IE = VBLANK | TIMER1;
 
     IME = 1;
 }

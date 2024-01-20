@@ -16,7 +16,7 @@ SRC_DIR := src
 OBJ_DIR := obj
 BIN_DIR := bin
 
-SRC_SUBDIRS := scene entity
+SRC_SUBDIRS := sound scene entity
 
 ifeq ($(CURRENT_OS),UNIX)
 	CC      := arm-none-eabi-gcc

@@ -13,30 +13,12 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-#ifndef VULC_TEMPLATE_SOUND
-#define VULC_TEMPLATE_SOUND
+#include "sound.h"
 
-#include "main.h"
+#define MASTER_SOUND_CONTROL *((vu16 *) 0x04000084)
 
-#include "sounds.h"
+void sound_init(void) {
+    MASTER_SOUND_CONTROL = 1 << 7; // Enable sound
 
-extern void sound_init(void);
-
-// === Direct Sound ===
-
-#define sound_channel_A (0)
-#define sound_channel_B (1)
-
-#define SOUND_PLAY(sound, channel, loop)\
-    sound_play((sound), sizeof(sound), (channel), (loop))
-
-extern void sound_play(const u8 *sound, u32 length,
-                       bool channel, bool loop);
-extern void sound_stop(bool channel);
-
-extern void sound_direct_init(void);
-extern void sound_timer1_irq(void);
-
-// ===== ===== =====
-
-#endif // VULC_TEMPLATE_SOUND
+    sound_direct_init();
+}
