@@ -15,7 +15,7 @@
 
 @ Based on crt0.S v1.28 by Jeff Frohwein
 
-.text
+.section .crt0, "ax"
 
 .global _start
 .arm
@@ -62,7 +62,7 @@ _start:
     @ Software Version
         .byte   0x00
 
-    @ Complement Check
+    @ Header Checksum
         .byte   0x87
 
     @ Reserved (2 Bytes)
