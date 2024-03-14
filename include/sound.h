@@ -13,8 +13,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-#ifndef VULC_TEMPLATE_SOUND
-#define VULC_TEMPLATE_SOUND
+#pragma once
 
 #include "main.h"
 
@@ -23,6 +22,8 @@
 extern void sound_init(void);
 
 // === Direct Sound ===
+
+#define SOUND_SAMPLE_RATE (16 * 1024)
 
 #define sound_channel_A (0)
 #define sound_channel_B (1)
@@ -35,8 +36,5 @@ extern void sound_play(const u8 *sound, u32 length,
 extern void sound_stop(bool channel);
 
 extern void sound_direct_init(void);
-extern void sound_timer1_irq(void);
 
 // ===== ===== =====
-
-#endif // VULC_TEMPLATE_SOUND

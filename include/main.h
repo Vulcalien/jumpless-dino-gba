@@ -17,24 +17,8 @@
 #define VULC_TEMPLATE_CORE
 
 #include "types.h"
+#include "base.h"
 #include "util.h"
-
-#define THUMB __attribute__((target("thumb")))
-
-#define NOINLINE __attribute__((noinline))
-#define NOCLONE  __attribute__((noclone))
-
-#define SBSS_SECTION         __attribute__((section(".sbss")))
-#define EWRAM_SECTION        __attribute__((section(".ewram")))
-#define EWRAM_RODATA_SECTION __attribute__((section(".ewram.rodata")))
-#define IWRAM_SECTION        __attribute__((section(".iwram")))
-#define IWRAM_RODATA_SECTION __attribute__((section(".iwram.rodata")))
-
-#define static_assert _Static_assert
-
-#ifndef NULL
-    #define NULL ((void *) 0)
-#endif
 
 extern u32 tick_count;
 

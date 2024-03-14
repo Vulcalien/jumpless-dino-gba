@@ -40,6 +40,11 @@ static inline void draw(void) {
     performance_draw();
 }
 
+IWRAM_SECTION
+static void vblank(void) {
+    performance_vblank();
+}
+
 static inline void load_high_score(void) {
     // check for the Game Code (ZJDE)
     if(SRAM[0] != 'Z' ||
@@ -55,8 +60,11 @@ int AgbMain(void) {
     screen_init();
     scene_set(&scene_start, 1);
 
-    interrupt_enable();
+    interrupt_init();
     sound_init();
+
+    interrupt_enable(IRQ_VBLANK);
+    interrupt_set_isr(IRQ_VBLANK, vblank);
 
     load_high_score();
 
