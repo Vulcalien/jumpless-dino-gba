@@ -13,20 +13,8 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-#ifndef VULC_TEMPLATE_CORE
-#define VULC_TEMPLATE_CORE
+#pragma once
 
-#include "base.h"
-#include "bios.h"
-#include "util.h"
+#include "main.h"
 
-extern u32 tick_count;
-
-extern u32 high_score;
-extern u32 score;
-
-inline u32 actual_score(void) {
-    return score / 16;
-}
-
-#endif // VULC_TEMPLATE_CORE
+extern void vsync(void);

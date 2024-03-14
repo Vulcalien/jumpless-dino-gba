@@ -53,6 +53,4 @@ extern void screen_write_number(u32 number, u32 palette,
 extern void screen_clear_bg0(void);
 extern void screen_draw_bg2(void);
 
-extern void vsync(void);
-
 #endif // VULC_TEMPLATE_SCREEN

@@ -196,8 +196,3 @@ void screen_draw_bg2(void) {
         BG2_TILEMAP[(x0 + 3) + (y0 + 1) * 32] = 27;
     }
 }
-
-IWRAM_SECTION
-void vsync(void) {
-    __asm__ volatile ("swi 0x05 << 16");
-}
