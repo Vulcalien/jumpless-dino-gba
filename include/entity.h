@@ -83,7 +83,7 @@ inline bool entity_intersects(struct entity_Data *data,
 
 inline bool entity_touches(struct entity_Data *data1,
                            struct entity_Data *data2) {
-    const struct Entity *e2 = entity_type(data1);
+    const struct Entity *e2 = entity_type(data2);
 
     return entity_intersects(
         data1,

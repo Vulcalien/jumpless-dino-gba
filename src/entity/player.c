@@ -66,7 +66,7 @@ static void player_tick(struct Level *level, struct entity_Data *data) {
     // check for contact with other entities
     for(u32 i = 1; i < LEVEL_ENTITY_LIMIT; i++) {
         struct entity_Data *data2 = &level->entities[i];
-        if(data->type >= ENTITY_TYPES)
+        if(data2->type >= ENTITY_TYPES)
             continue;
 
         if(entity_touches(data, data2)) {
